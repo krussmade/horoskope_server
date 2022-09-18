@@ -21,6 +21,9 @@ int main() {
 //
 //    horoscope::compatibility_info compatibil;
 //    rep.getCompatibility({horoscope::zodiac_sign::zodiac_signs::ARIES}, {horoscope::zodiac_sign::zodiac_signs::ARIES}, &compatibil);
+//
+    horoscope::prediction prediction_model;
+    rep.getPrediction({2003, 1, 21}, {horoscope::date_category::date_categories::YEAR}, &prediction_model);
 
     server.Post("sign/sun/", [&](const httplib::Request &req, httplib::Response &res) {
         nlohmann::json json_tree = nlohmann::json::parse(req.body);

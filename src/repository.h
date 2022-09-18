@@ -24,6 +24,7 @@ namespace horoscope {
         void getCompatibility(zodiac_sign, zodiac_sign, compatibility_info *);
 
     private:
+
         void predictionParse(date, date_category, prediction *);
 
         void parseCompatibility(zodiac_sign, zodiac_sign, compatibility_info *);

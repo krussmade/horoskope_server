@@ -6,7 +6,7 @@ namespace horoscope {
             db_(DB_PATH),
             client_(HORO_MAIL_SERVER) {
         sqlitepp::query predictions_query(db_, "CREATE TABLE IF NOT EXISTS predictions_db "
-                                               "(id INT,today_date VARCHAR, today_prediction VARCHAR, "
+                                               "(id INT, today_date VARCHAR, today_prediction VARCHAR, "
                                                "tomorrow_date VARCHAR, tomorrow_prediction VARCHAR, "
                                                "week_date VARCHAR, week_prediction VARCHAR,"
                                                "month_date VARCHAR, month_prediction VARCHAR,"
@@ -38,7 +38,59 @@ namespace horoscope {
 
     void
     repository::getPrediction(date date_of_birth, date_category category_of_date, prediction *result) {
-        this->predictionParse(date_of_birth, category_of_date, result);
+        zodiac_sign sign = date_of_birth.to_zodiac_sign();
+        sqlitepp::query query(db_, "SELECT * FROM predictions_db WHERE id = " + std::to_string(sign.sign) + ";");
+        sqlitepp::result res = query.store();
+
+        date current_date = date::get_current_date();
+        if (res.empty()) {
+            this->predictionParse(date_of_birth, category_of_date, result);
+            std::string date_name = category_of_date.to_str() + "_date";
+            std::string prediction_name = category_of_date.to_str() + "_prediction";
+            sqlitepp::query insert_query(db_, "INSERT INTO predictions_db (id, " + date_name + ", " +
+                                              prediction_name + ") VALUES('" +
+                                              std::to_string(sign.sign) + "','" +
+                                              current_date.to_str() + "','" +
+                                              result->text + "')");
+            insert_query.exec();
+        } else {
+            std::string prediction_name = category_of_date.to_str() + "_prediction";
+            std::string date_name = category_of_date.to_str() + "_date";
+            bool flag = false;
+            if (!res[0][prediction_name.c_str()].is_null() && !res[0][date_name.c_str()].is_null()) {
+                date date_from_bd = date::parse(res[0][date_name.c_str()]);
+                if (category_of_date.category == date_category::date_categories::TODAY) {
+                    if (date_from_bd.dayEquality(current_date)) {
+                        flag = true;
+                    }
+                } else if (category_of_date.category == date_category::date_categories::TOMORROW) {
+                    if (date_from_bd.monthEquality(current_date) && current_date.day - date_from_bd.day <= 1) {
+                        flag = true;
+                    }
+                } else if (category_of_date.category == date_category::date_categories::WEEK) {
+                    flag = false;
+                } else if (category_of_date.category == date_category::date_categories::MONTH) {
+                    if (date_from_bd.monthEquality(current_date)) {
+                        flag = true;
+                    }
+                } else {
+                    if (date_from_bd.yearEquality(current_date)) {
+                        flag = true;
+                    }
+                }
+            }
+            if (flag) {
+                result->text.append(res[0][prediction_name.c_str()]);
+            } else {
+                this->predictionParse(date_of_birth, category_of_date, result);
+                sqlitepp::query update_query(db_, "UPDATE predictions_db "
+                                                  "SET " +
+                                                  date_name + " = '" + current_date.to_str() + "', " +
+                                                  prediction_name + " = '" + result->text + "' " +
+                                                  "WHERE id = " + std::to_string(sign.sign));
+                update_query.exec();
+            }
+        }
     }
 
     void repository::predictionParse(date date_of_birth, date_category category_of_date, prediction *result) {

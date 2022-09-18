@@ -22,22 +22,16 @@ namespace horoscope {
             switch (category) {
                 case TODAY:
                     return "today";
-                    break;
                 case TOMORROW:
                     return "tomorrow";
-                    break;
                 case WEEK:
                     return "week";
-                    break;
                 case MONTH:
                     return "month";
-                    break;
                 case YEAR:
                     return "year";
-                    break;
                 case ERROR:
                     return {};
-                    break;
             }
         }
 
@@ -147,12 +141,24 @@ namespace horoscope {
             return result;
         }
 
-        bool operator==(const date &other) {
+        bool yearEquality(const date &other) const {
+            return year == other.year;
+        }
+
+        bool monthEquality(const date &other) const {
+            return year == other.year && month == other.month;
+        }
+
+        bool weekEquality(const date &other) const {
+            return year == other.year && month == other.month && day / 7 == other.day / 7;
+        }
+
+        bool dayEquality(const date &other) const {
             return year == other.year && month == other.month && day == other.day;
         }
 
-        std::string to_str() {
-            return std::to_string(day) + "-" + std::to_string(month) + "-" + std::to_string(year);
+        std::string to_str() const {
+            return std::to_string(year) + "-" + std::to_string(month) + "-" + std::to_string(day);
         }
 
         static date get_current_date() {
@@ -164,7 +170,7 @@ namespace horoscope {
 
             result.day = time_info->tm_mday;
             result.month = time_info->tm_mon;
-            result.day = time_info->tm_year;
+            result.year = time_info->tm_year;
 
             return result;
         }
