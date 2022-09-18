@@ -28,7 +28,7 @@ namespace horoscope {
     }
 
     void repository::getSignInfo(date date_of_birth, sign_info *result) {
-        zodiac_sign sign = date_of_birth.to_zodiac_sign();
+        zodiac_sign sign = date_of_birth.toZodiacSign();
         sqlitepp::query query(db_, "SELECT * FROM signs_info WHERE id = " + std::to_string(sign.sign) + ";");
         sqlitepp::result res = query.store();
         result->sign_name.append(res[0]["sign_name"]);
@@ -38,11 +38,11 @@ namespace horoscope {
 
     void
     repository::getPrediction(date date_of_birth, date_category category_of_date, prediction *result) {
-        zodiac_sign sign = date_of_birth.to_zodiac_sign();
+        zodiac_sign sign = date_of_birth.toZodiacSign();
         sqlitepp::query query(db_, "SELECT * FROM predictions_db WHERE id = " + std::to_string(sign.sign) + ";");
         sqlitepp::result res = query.store();
 
-        date current_date = date::get_current_date();
+        date current_date = date::getCurrentDate();
         if (res.empty()) {
             this->predictionParse(date_of_birth, category_of_date, result);
             std::string date_name = category_of_date.to_str() + "_date";
@@ -94,7 +94,7 @@ namespace horoscope {
     }
 
     void repository::predictionParse(date date_of_birth, date_category category_of_date, prediction *result) {
-        zodiac_sign sign = date_of_birth.to_zodiac_sign();
+        zodiac_sign sign = date_of_birth.toZodiacSign();
         auto result_by_server = client_.Get("/prediction/" + sign.to_str() + "/" + category_of_date.to_str() + "/");
         std::string html_code = result_by_server->body;
         HtmlParser parser;

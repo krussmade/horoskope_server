@@ -161,7 +161,7 @@ namespace horoscope {
             return std::to_string(year) + "-" + std::to_string(month) + "-" + std::to_string(day);
         }
 
-        static date get_current_date() {
+        static date getCurrentDate() {
             date result;
             time_t raw_time;
             tm *time_info;
@@ -175,7 +175,7 @@ namespace horoscope {
             return result;
         }
 
-        zodiac_sign to_zodiac_sign() {
+        zodiac_sign toZodiacSign() {
             if ((month == 3 && day >= 21) || (month == 4 && day <= 20)) {
                 return zodiac_sign{zodiac_sign::ARIES};
             } else if ((month == 4 && day >= 21) || (month == 5 && day <= 21)) {
