@@ -1,7 +1,7 @@
 #ifndef HOROSCOPE_SERVER_CONFIG_H
 #define HOROSCOPE_SERVER_CONFIG_H
 
-#define PORT 8080
+#define PORT 1234
 #define IP "localhost"
 
 #define HORO_MAIL_SERVER "http://horo.mail.ru"
