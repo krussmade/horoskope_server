@@ -74,6 +74,6 @@ int main() {
         res.set_content(result_tree.dump(), "text/plain");
     });
 
-    server.listen("localhost", PORT);
+    server.listen(SERVER_IP, SERVER_PORT);
     return 0;
 }
