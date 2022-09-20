@@ -25,7 +25,7 @@ int main() {
 //    horoscope::prediction prediction_model;
 //    rep.getPrediction({2003, 1, 21}, {horoscope::date_category::date_categories::YEAR}, &prediction_model);
 
-    server.Post("sign/sun/", [&](const httplib::Request &req, httplib::Response &res) {
+    server.Post("/sign/sun/", [&](const httplib::Request &req, httplib::Response &res) {
         nlohmann::json json_tree = nlohmann::json::parse(req.body);
         horoscope::date date = horoscope::date::parse(json_tree["dateOfBirth"].get<std::string>());
         horoscope::sign_info sign_info_model;
@@ -39,7 +39,7 @@ int main() {
         res.set_content(result_tree.dump(), "text/plain");
     });
 
-    server.Post("horoscope/basic/", [&](const httplib::Request &req, httplib::Response &res) {
+    server.Post("/horoscope/basic/", [&](const httplib::Request &req, httplib::Response &res) {
         nlohmann::json json_tree = nlohmann::json::parse(req.body);
         horoscope::date date = horoscope::date::parse(json_tree["dateOfBirth"].get<std::string>());
         horoscope::date_category category = horoscope::date_category::parse(json_tree["onDate"].get<std::string>());
@@ -54,7 +54,7 @@ int main() {
         res.set_content(result_tree.dump(), "text/plain");
     });
 
-    server.Post("horoscope/compatibility/", [&](const httplib::Request &req, httplib::Response &res) {
+    server.Post("/horoscope/compatibility/", [&](const httplib::Request &req, httplib::Response &res) {
         nlohmann::json json_tree = nlohmann::json::parse(req.body);
         horoscope::zodiac_sign man_sign{horoscope::zodiac_sign::zodiac_signs(json_tree["manSign"].get<int>())};
         horoscope::zodiac_sign woman_sign{horoscope::zodiac_sign::zodiac_signs(json_tree["womanSign"].get<int>())};
