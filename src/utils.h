@@ -34,10 +34,6 @@ namespace horoscope {
                     return {};
             }
         }
-
-        static date_category parse(const std::string &src) {
-            return date_category{static_cast<date_categories>(std::stoi(src))};
-        }
     };
 
 

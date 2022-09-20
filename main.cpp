@@ -2,8 +2,6 @@
 #include "src/utils.h"
 #include "src/repository.h"
 #include "libs/httplib.h"
-#include "libs/html_parser.hpp"
-
 #include "src/config.h"
 #include <fstream>
 
@@ -42,7 +40,7 @@ int main() {
     server.Post("/horoscope/basic/", [&](const httplib::Request &req, httplib::Response &res) {
         nlohmann::json json_tree = nlohmann::json::parse(req.body);
         horoscope::date date = horoscope::date::parse(json_tree["dateOfBirth"].get<std::string>());
-        horoscope::date_category category = horoscope::date_category::parse(json_tree["onDate"].get<std::string>());
+        horoscope::date_category category{horoscope::date_category::date_categories(json_tree["period"].get<int>())};
 
         horoscope::prediction prediction_model;
         rep.getPrediction(date, category, &prediction_model);
