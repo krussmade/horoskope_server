@@ -18,7 +18,7 @@ namespace horoscope {
 
         date_categories category;
 
-        std::string to_str() {
+        std::string to_str() const {
             switch (category) {
                 case TODAY:
                     return "today";
@@ -56,7 +56,7 @@ namespace horoscope {
 
         zodiac_signs sign;
 
-        std::string to_str() {
+        std::string to_str() const {
             switch (sign) {
                 case ARIES:
                     return "aries";
@@ -171,7 +171,7 @@ namespace horoscope {
             return result;
         }
 
-        zodiac_sign toZodiacSign() {
+        zodiac_sign toZodiacSign() const {
             if ((month == 3 && day >= 21) || (month == 4 && day <= 20)) {
                 return zodiac_sign{zodiac_sign::ARIES};
             } else if ((month == 4 && day >= 21) || (month == 5 && day <= 21)) {
