@@ -202,7 +202,7 @@ namespace horoscope {
     };
 
     inline int compatibility(zodiac_sign woman_zodiac_num, zodiac_sign man_zodiac_num) {
-        return ((woman_zodiac_num.sign - 1) * 12) + woman_zodiac_num.sign;
+        return ((woman_zodiac_num.sign - 1) * 12) + man_zodiac_num.sign;
     }
 }
 #endif //HOROSCOPE_SERVER_UTILS_H
