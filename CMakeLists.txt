@@ -13,7 +13,6 @@ add_executable(horoscope_server
         src/repository.h
         src/utils.h
         src/models.h
-        libs/sqlite/shell.c
         libs/sqlite/sqlite3.c
         libs/sqlite/sqlite3.h
         libs/sqlite/sqlite3ext.h
