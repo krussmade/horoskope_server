@@ -98,8 +98,8 @@ namespace horoscope {
         auto result_by_server = client_.Get("/prediction/" + sign.to_str() + "/" + category_of_date.to_str() + "/");
         std::string html_code = result_by_server->body;
         HtmlParser parser;
-        shared_ptr<HtmlDocument> doc = parser.Parse(html_code.c_str(), html_code.size());
-        std::vector<shared_ptr<HtmlElement>> elements_by_class_name = doc->GetElementByClassName(
+        std::shared_ptr<HtmlDocument> doc = parser.Parse(html_code.c_str(), html_code.size());
+        std::vector<std::shared_ptr<HtmlElement>> elements_by_class_name = doc->GetElementByClassName(
                 "article__item article__item_alignment_left article__item_html");
         for (int i = 0; i < elements_by_class_name.size(); ++i) {
             for (auto j = elements_by_class_name[i]->ChildBegin(); j != elements_by_class_name[i]->ChildEnd(); ++j) {
@@ -148,8 +148,8 @@ namespace horoscope {
         auto result_by_server = client_.Get("/compatibility/zodiac/" + std::to_string(combination) + "/");
         std::string html_code = result_by_server->body;
         HtmlParser parser;
-        shared_ptr<HtmlDocument> doc = parser.Parse(html_code.c_str(), html_code.size());
-        std::vector<shared_ptr<HtmlElement>> compatibility_items = (*doc->GetElementByClassName(
+        std::shared_ptr<HtmlDocument> doc = parser.Parse(html_code.c_str(), html_code.size());
+        std::vector<std::shared_ptr<HtmlElement>> compatibility_items = (*doc->GetElementByClassName(
                 "article__item article__item_alignment_left article__item_html").front()).GetElementByTagName("p");
 
         result->happiness_in_marriage = (*(compatibility_items[0]->ChildBegin()))->GetValue();
@@ -158,7 +158,7 @@ namespace horoscope {
         result->family_compatibility = (*(compatibility_items[3]->ChildBegin()))->GetValue();
         result->for_kids_compatibility = (*(compatibility_items[4]->ChildBegin()))->GetValue();
 
-        std::vector<shared_ptr<HtmlElement>> percentage = doc->GetElementByClassName(
+        std::vector<std::shared_ptr<HtmlElement>> percentage = doc->GetElementByClassName(
                 "p-item__left-icon-text");
 
         std::string percentage_str = (*(percentage.front()->ChildBegin()))->GetValue();
