@@ -4,6 +4,7 @@
 #define SERVER_PORT 6666
 #define SERVER_IP "localhost"
 
+//#define CPPHTTPLIB_OPENSSL_SUPPORT
 #define HORO_MAIL_SERVER "http://horo.mail.ru"
 #define DB_PATH "../database.db"
 

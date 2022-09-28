@@ -95,7 +95,8 @@ namespace horoscope {
 
     void repository::predictionParse(date date_of_birth, date_category category_of_date, prediction *result) {
         zodiac_sign sign = date_of_birth.toZodiacSign();
-        auto result_by_server = client_.Get("/prediction/" + sign.to_str() + "/" + category_of_date.to_str() + "/");
+        auto path = "/prediction/" + sign.to_str() + "/" + category_of_date.to_str() + "/";
+        auto result_by_server = client_.Get(path);
         std::string html_code = result_by_server->body;
         HtmlParser parser;
         std::shared_ptr<HtmlDocument> doc = parser.Parse(html_code.c_str(), html_code.size());
