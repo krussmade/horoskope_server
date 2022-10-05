@@ -22,3 +22,5 @@ add_executable(horoscope_server
 find_package(OpenSSL REQUIRED)
 target_link_libraries(horoscope_server OpenSSL::SSL OpenSSL::Crypto)
 
+add_subdirectory(test_client)
+

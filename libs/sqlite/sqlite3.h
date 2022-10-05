@@ -10,7 +10,7 @@
 **
 *************************************************************************
 ** This header file defines the interface that the SQLite library
-** presents to client programs.  If a C-function, structure, datatype,
+** presents to test_client programs.  If a C-function, structure, datatype,
 ** or constant definition does not appear in this file, then it is
 ** not a published API of SQLite, is subject to change without
 ** notice, and should not be referenced by programs that use SQLite.
@@ -1157,23 +1157,23 @@ struct sqlite3_io_methods {
 **
 ** <li>[[SQLITE_FCNTL_CKPT_START]]
 ** The [SQLITE_FCNTL_CKPT_START] opcode is invoked from within a checkpoint
-** in wal mode before the client starts to copy pages from the wal
+** in wal mode before the test_client starts to copy pages from the wal
 ** file to the database file.
 **
 ** <li>[[SQLITE_FCNTL_CKPT_DONE]]
 ** The [SQLITE_FCNTL_CKPT_DONE] opcode is invoked from within a checkpoint
-** in wal mode after the client has finished copying pages from the wal
+** in wal mode after the test_client has finished copying pages from the wal
 ** file to the database file, but before the *-shm file is updated to
 ** record the fact that the pages have been checkpointed.
 ** </ul>
 **
 ** <li>[[SQLITE_FCNTL_EXTERNAL_READER]]
 ** The EXPERIMENTAL [SQLITE_FCNTL_EXTERNAL_READER] opcode is used to detect
-** whether or not there is a database client in another process with a wal-mode
+** whether or not there is a database test_client in another process with a wal-mode
 ** transaction open on the database or not. It is only available on unix.The
 ** (void*) argument passed with this file-control should be a pointer to a
 ** value of type (int). The integer value is set to 1 if the database is a wal
-** mode database and there exists at least one client in another process that
+** mode database and there exists at least one test_client in another process that
 ** currently has an SQL transaction open on the database. It is set to 0 if
 ** the database is not a wal-mode db, or if there is no such connection in any
 ** other process. This opcode cannot be used to detect transactions opened
@@ -7228,7 +7228,7 @@ struct sqlite3_index_info {
 ** by the first parameter.  ^The name of the module is given by the
 ** second parameter.  ^The third parameter is a pointer to
 ** the implementation of the [virtual table module].   ^The fourth
-** parameter is an arbitrary client data pointer that is passed through
+** parameter is an arbitrary test_client data pointer that is passed through
 ** into the [xCreate] and [xConnect] methods of the virtual table module
 ** when a new virtual table is be being created or reinitialized.
 **
@@ -7293,7 +7293,7 @@ SQLITE_API int sqlite3_drop_modules(
 ** string obtained from [sqlite3_mprintf()] to zErrMsg.  The method should
 ** take care that any prior string is freed by a call to [sqlite3_free()]
 ** prior to assigning a new string to zErrMsg.  ^After the error message
-** is delivered up to the client application, the string will be automatically
+** is delivered up to the test_client application, the string will be automatically
 ** freed by sqlite3_free() and the zErrMsg field will be zeroed.
 */
 struct sqlite3_vtab {

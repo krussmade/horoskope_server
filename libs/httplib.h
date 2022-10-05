@@ -424,7 +424,7 @@ namespace httplib {
         Ranges ranges;
         Match matches;
 
-        // for client
+        // for test_client
         ResponseHandler response_handler;
         ContentReceiverWithProgress content_receiver;
         Progress progress;
@@ -5736,7 +5736,7 @@ inline bool load_system_certs_on_windows(X509_STORE *store) {
 
         detail::stream_line_reader line_reader(strm, buf.data(), buf.size());
 
-        // Connection has been closed on client
+        // Connection has been closed on test_client
         if (!line_reader.getline()) { return false; }
 
         Request req;
@@ -5871,7 +5871,7 @@ inline bool load_system_certs_on_windows(X509_STORE *store) {
         return ret;
     }
 
-// HTTP client implementation
+// HTTP test_client implementation
     inline ClientImpl::ClientImpl(const std::string &host)
             : ClientImpl(host, 80, std::string(), std::string()) {}
 
@@ -7534,7 +7534,7 @@ inline bool SSLServer::process_and_close_socket(socket_t sock) {
   return ret;
 }
 
-// SSL HTTP client implementation
+// SSL HTTP test_client implementation
 inline SSLClient::SSLClient(const std::string &host)
     : SSLClient(host, 443, std::string(), std::string()) {}
 
@@ -7913,7 +7913,7 @@ inline bool SSLClient::check_host_name(const char *pattern,
 }
 #endif
 
-// Universal client implementation
+// Universal test_client implementation
     inline Client::Client(const std::string &scheme_host_port)
             : Client(scheme_host_port, std::string(), std::string()) {}
 
