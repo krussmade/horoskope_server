@@ -105,7 +105,7 @@ namespace horoscope {
         for (int i = 0; i < elements_by_class_name.size(); ++i) {
             for (auto j = elements_by_class_name[i]->ChildBegin(); j != elements_by_class_name[i]->ChildEnd(); ++j) {
                 for (auto k = (*j)->ChildBegin(); k != (*j)->ChildEnd(); ++k) {
-                    result->text += (*k)->GetValue() + "\n";
+                    result->text += (*k)->GetValue() + '\n';
                 }
             }
         }
@@ -132,8 +132,8 @@ namespace horoscope {
                                     + "'" + result->sexual_compatibility + "', "
                                     + "'" + result->family_compatibility + "', "
                                     + "'" + result->for_kids_compatibility + "');";
-            sqlitepp::query query(db_, query_str);
-            query.exec();
+            sqlitepp::query insert_query(db_, query_str);
+            insert_query.exec();
         } else {
             result->percentage = res[0]["percentage"];
             result->happiness_in_marriage.append(res[0]["happiness_in_marriage"]);

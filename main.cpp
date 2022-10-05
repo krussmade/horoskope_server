@@ -29,11 +29,7 @@ int main() {
         horoscope::sign_info sign_info_model;
         rep.getSignInfo(date, &sign_info_model);
         nlohmann::json result_tree;
-        result_tree["status"] = sign_info_model.status;
-        result_tree["message"] = std::move(sign_info_model.message);
-        result_tree["data"]["signName"] = std::move(sign_info_model.sign_name);
-        result_tree["data"]["signElement"] = std::move(sign_info_model.sign_element);
-        result_tree["data"]["signDesc"] = std::move(sign_info_model.sign_desk);
+        sign_info_model.serialize(result_tree);
         res.set_content(result_tree.dump(), "text/plain");
     });
 
@@ -46,9 +42,7 @@ int main() {
         rep.getPrediction(date, category, &prediction_model);
 
         nlohmann::json result_tree;
-        result_tree["status"] = prediction_model.status;
-        result_tree["message"] = std::move(prediction_model.message);
-        result_tree["data"]["text"] = std::move(prediction_model.text);
+        prediction_model.serialize(result_tree);
         res.set_content(result_tree.dump(), "text/plain");
     });
 
@@ -61,14 +55,7 @@ int main() {
         rep.getCompatibility(man_sign, woman_sign, &compatibility_info_model);
 
         nlohmann::json result_tree;
-        result_tree["status"] = compatibility_info_model.status;
-        result_tree["message"] = std::move(compatibility_info_model.message);
-        result_tree["data"]["percentage"] = compatibility_info_model.percentage;
-        result_tree["data"]["happinessInMarriage"] = std::move(compatibility_info_model.happiness_in_marriage);
-        result_tree["data"]["goodLuckCompatibility"] = std::move(compatibility_info_model.good_luck_compatibility);
-        result_tree["data"]["sexualCompatibility"] = std::move(compatibility_info_model.sexual_compatibility);
-        result_tree["data"]["familyCompatibility"] = std::move(compatibility_info_model.family_compatibility);
-        result_tree["data"]["forKidsCompatibility"] = std::move(compatibility_info_model.for_kids_compatibility);
+        compatibility_info_model.serialize(result_tree);
         res.set_content(result_tree.dump(), "text/plain");
     });
 

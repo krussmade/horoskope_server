@@ -17,3 +17,8 @@ add_executable(horoscope_server
         libs/sqlite/sqlite3.h
         libs/sqlite/sqlite3ext.h
         libs/sqlitepp.h)
+
+# set(OPENSSL_ROOT_DIR "C:/OpenSSL/STATIC/x32/Release")
+find_package(OpenSSL REQUIRED)
+target_link_libraries(horoscope_server OpenSSL::SSL OpenSSL::Crypto)
+
